@@ -51,9 +51,12 @@
         <section data-auto-animate>
             <img src="img/multiscale_models.svg" class="stretch"
                  alt="Multiscale models"/>
-            <small>Hasenauer et al., J. Coup. Sys. and Mult. Dyn. 2015</small>
-            <h2 class="fragment">How to infer parameters for complex stochastic
-                models?</h2>
+            <small>Hasenauer et al., J. Coup. Sys. and Mult. Dyn.
+                2015</small><br/>
+            <div class="fragment">
+                <s>likelihood <i>p(D|&theta;)</i></s><br/>
+                <h2>How to infer parameters for complex stochastic models?</h2>
+            </div>
         </section>
 
 
@@ -68,45 +71,36 @@
             //    node.innerHTML += "<section data-transition='fade'><h2>ABC-SMC</h2>combine with a sequential Monte-Carlo scheme<img src='img/abc_principles-" + i + ".svg' alt='ABC-SMC principles'/><small>similar to Toni et al., J. Royal Society 2009</small></section>"
             //}
             //node.innerHTML += "<section data-transition='fade-in slide-out'><h2>ABC-SMC</h2>combine with a sequential Monte-Carlo scheme<img src='img/abc_principles-9.svg' alt='ABC-SMC principles'/><small>similar to Toni et al., J. Royal Society 2009</small></section>"
+
+
         </script>
 
 
         <section>
             <h2>Approximate Bayesian Posterior</h2>
-            We want:
-            \[\pi(\theta|D) \propto \color{red}{p(D|\theta)}\pi(\theta)\]
-            <br/>
-            We get:
-            \[\pi_{ABC}(\theta|D) \propto \color{red}{\int I(\{d(y, D) \leq
-            \varepsilon\})p(y|\theta)\operatorname{dy}}\pi(\theta) \approx
-            \frac{1}{N} \sum_{i=1}^N\delta_{\theta^{(i)}}(\theta)\]
-            with distance $d$, threshold $\varepsilon>0$, and summary
-            statistics $s$
+            <p>
+                We want:
+                \[\pi(\theta|D) \propto \color{red}{p(D|\theta)}\pi(\theta)\]
+            </p>
+            <p class="fragment">
+                We get:
+                \[\pi_{ABC}(\theta|D) \propto \color{red}{\int I(\{d(y, D) \leq
+                \varepsilon\})p(y|\theta)\operatorname{dy}}\pi(\theta) \approx
+                \frac{1}{N} \sum_{i=1}^N\delta_{\theta^{(i)}}(\theta)\]
+                with distance $d$, threshold $\varepsilon>0$, and summary
+                statistics $s$
+            </p>
+        </section>
+
+
+        <section>
+            <img src="img/rose_hammer.svg"/><br/>
+            Not everything is a nail.
         </section>
 
 
         <section data-background="#e4003a" data-background-transition="zoom">
             <h1>Noise</h1>
-        </section>
-
-
-        <section data-transition="slide-in fade-out">
-            <h2>What happens when ignoring noise in ABC?</h2>
-            <p>Assume: Model $y\sim p(y|\theta)$ does not
-                account for noise.
-            <p>But: Measurements are noisy, $D\sim \pi(\bar
-                y|y,\theta)$.
-            <img src="img/motivation_data.svg" class="r-stretch"/>
-        </section>
-        
-        
-        <section data-transition="fade-in slide-out">
-            <h2>What happens when ignoring noise in ABC?</h2>
-            <ul>
-                <li>Confident but potentially wrong parameter estimates</li>
-                <li>Assumes noise-free measurements and no model error</li>
-                <li>Analysis for a wrong model</li>
-            </ul>
         </section>
 
 
@@ -116,17 +110,37 @@
                 <img src="img/nonoise_papers.svg"/>
                 <div class="fragment">
                     <blockquote>
-                        &ldquo;We used ABC to parameterize our ODE&rdquo;
+                        &ldquo;To avoid assumptions of a normal likelihood we
+                        use [...] ABC&rdquo;
                     </blockquote>
                     <blockquote>
                         &ldquo;ABC does not use a likelihood&rdquo;
                     </blockquote>
-                    <blockquote>
-                        &ldquo;To avoid assumptions of a normal likelihood we
-                        use [...] ABC&rdquo;
-                    </blockquote>
+                    <!--<blockquote>
+                        &ldquo;We used ABC to parameterize our ODE&rdquo;
+                    </blockquote>-->
                 </div>
             </div>
+        </section>
+
+
+        <section data-transition="slide-in fade-out">
+            <h2>What happens when ignoring noise in ABC?</h2>
+            <p>Assume: Model $y\sim p(y|\theta)$ does not
+                account for noise.
+            <p>But: Measurements are noisy, $D\sim \pi(\bar
+                y|y,\theta)$.
+                <img src="img/motivation_data.svg" class="r-stretch"/>
+        </section>
+
+
+        <section data-transition="fade-in slide-out">
+            <h2>What happens when ignoring noise in ABC?</h2>
+            <ul>
+                <li>Confident but potentially wrong parameter estimates</li>
+                <li>Assumes noise-free measurements and no model error</li>
+                <li>Analysis for a wrong model</li>
+            </ul>
         </section>
 
 
@@ -140,12 +154,12 @@
         <section>
             <h2>No noise, no ABC</h2>
             <blockquote>
-                &ldquo;ABC provides exact inference for the wrong model&rdquo;
+                &ldquo;ABC gives exact inference for the wrong model&rdquo;
             </blockquote>
-            <div style="text-align: right"><small>Darren Wilkinson 2013</small>
+            <div style="text-align: right"><small>Richard Wilkinson 2013</small>
             </div>
             <p>
-                ... namely the acceptance step induces uniform noise
+                ... namely the acceptance step induces (uniform) noise
             </p>
         </section>
 
@@ -160,16 +174,17 @@
                 assuming <b>noisy data</b> $D\sim\pi(\bar y|y,\theta)$.
             </p>
             <p>
-            <ul>
-                <li>non-trivial noise allows to do exact likelihood-free
-                    inference
-                </li>
-                <li>also applicable to stochastic models</li>
-                <li>allows to parameterize the noise model</li>
-            </ul>
-            <p>
                 <strong>Proof: </strong>Yep.
             </p>
+            <div class="fragment">
+                <ul>
+                    <li>non-trivial noise allows to do exact likelihood-free
+                        inference
+                    </li>
+                    <li>also applicable to stochastic models</li>
+                    <li>allows to parameterize the noise model</li>
+                </ul>
+            </div>
         </section>
 
 
@@ -189,31 +204,37 @@
 
         <section>
             <h2>Integrate in SMC</h2>
-            <p class="fragment">
-                We temperate:
-            <p class="fragment">
-                3. Accept with probability
-                $\left(\frac{\pi(D|y,\theta)}{c}\right)^{\color{red}{1/T_t}}$
-                <br/>
-                with $c>\pi(D|y,\theta)$ $\forall y,\theta$, $T_0\gg 1$,
-                $T_{N_t} = 1$.
-            <p class="fragment">
-                This way, we take importance samples from
-                \[\pi_{\text{ABC},t}(\theta|D)\propto\int\pi(D|y,\theta)^{\color{red}{1/T_t}}p(y|\theta)\mathop{dy}\cdot\pi(\theta).\]
+            <div class="fragment">
+                <p>
+                    We temperate:
+                </p>
+                <p>
+                    3. Accept with probability
+                    $\left(\frac{\pi(D|y,\theta)}{c}\right)^{\color{red}{1/T_t}}$
+                    <br/>
+                    with $c>\pi(D|y,\theta)$ $\forall y,\theta$, $T_0\gg 1$,
+                    $T_{N_t} = 1$.
+                </p>
+                <p>
+                    This way, we take importance samples from
+                    \[\pi_{\text{ABC},t}(\theta|D)\propto\int\pi(D|y,\theta)^{\color{red}{1/T_t}}p(y|\theta)\mathop{dy}\cdot\pi(\theta).\]
+                </p>
+            </div>
         </section>
 
 
         <section>
             <h2>How to choose $c$?</h2>
-            <div style="display: flex">
-                <span style="padding: 10px;">
-                    <img src="img/c_trajectory.svg" class="fragment" height=300/>
-                </span>
+            <div style="display: flex; justify-content:center; align-items:center;">
                 <ul>
                     <li>Highest peak of density (usually at $y=D$)</li>
                     <li>Empirical highest peak</li>
                     <li>Adaptive choice</li>
                 </ul>
+                <span style="padding: 10px;">
+                    <img src="img/c_trajectory.svg" class="fragment"
+                         height=300/>
+                </span>
             </div>
             <p class="fragment">Introduces a bias if simulations with a higher
                 density occur.
@@ -222,29 +243,21 @@
 
 
         <section>
-            <h2>Theorem (Rejection Control Importance Sampling)</h2>
+            <h3>Theorem (Rejection Control Importance Sampling)</h3>
+            <img src="img/fixed_c_cr.svg" class="r-stretch"/>
             <p>
                 <b>For any $c_t>0$</b>, we have target the <b>correct
                 distribution</b> when we accept with probability
                 $\min\left[\frac{\pi(D|y,\theta)}{c},1\right]^{1/T_t}$ and <b>update
-                the weights</b> to
+                the weights</b> to:
                 \[\tilde w :=
-                \color{red}{\frac{\left(\frac{\pi(D|y,\theta)}{c_t}\right)^{1/T_t}}{\min\left[\frac{\pi(D|y,\theta)}{c_t},1\right]^{1/T_t}}}\cdot\frac{\pi(\theta)}{g_t(\theta)}.\]
-            <p>
-                <strong>Proof: </strong>Yep.
+                \color{red}{\frac{\left(\frac{\pi(D|y,\theta)}{c_t}\right)^{1/T_t}}{\min\left[\frac{\pi(D|y,\theta)}{c_t},1\right]^{1/T_t}}}\cdot\frac{\pi(\theta)}{g_t(\theta)}\]
             </p>
         </section>
 
 
         <section>
-            <h2>Reweighting corrects for bias</h2>
-            <img src="img/fixed_c_cr.svg" class="r-stretch"/>
-        </section>
-
-
-        <section>
             <h2>Acceptance rate scheme</h2>
-            <div>
             <ul>
                 <li><b>Predict acceptance rate</b> based on previous
                     simulations:
@@ -253,15 +266,16 @@
                     y_i^{(t-1)},\theta_i^{(t-1)})}{c_t}\right)^{1/T},1\right]\]
                 </li>
                 <li>Choose $T$ to fix rate to a constant value</li>
-                <li>In particular allows to <b>automatically choose $T_0$</b>
+                <li>In particular allows to <b>automatically choose $T_1$</b>
                 </li>
             </ul>
+            <img src="img/acceptance_rate.svg" class="r-stretch"/>
         </section>
 
 
         <section>
-            <h2>Acceptance rate prediction works</h2>
-            <img src="img/acceptance_rate.svg" class="r-stretch"/>
+            <h2>Smooth transition from prior to posterior</h2>
+            <img src="img/cr_10_alltimes.svg" class="r-stretch"/>
         </section>
 
 
@@ -270,16 +284,10 @@
         </section>
 
 
-        <section>
+        <!--<section>
             <h2>Able to estimate noise parameters</h2>
-            <img src="img/cr_uvar_with_true.svg" class="r-stretch"/>
-        </section>
-
-
-        <section>
-            <h2>Smooth transition from prior to posterior</h2>
-            <img src="img/cr_10_alltimes.svg" class="r-stretch"/>
-        </section>
+            <img src="img/cr_uvar_with_true.svg"/>
+        </section>-->
 
 
         <section>
@@ -376,16 +384,13 @@
             <pre>
         <code class="python" data-trim>
 # define problem
-abc = pyabc.ABCSMC(
-    model, prior,
-    acceptance_kernel,
-    temperature_scheme,
-    acceptor)
+abc = pyabc.ABCSMC(model, prior,
+                   acceptance_kernel,
+                   temperature_scheme,
+                   acceptor)
 
 # pass data
-abc.new(
-    database,
-    observation)
+abc.new(database, observation)
 
 # run it
 abc.run()
@@ -413,9 +418,10 @@ abc.run()
                     <li>Self-tuned.</li>
                 </ul>
                 <span style="padding: 10px;">
-                <img src="img/rose_hammer.svg"/>
-                <small>Not everything is a nail.</small>
-            </span>
+                    <img src="img/logo.svg" width="300px"/>
+                    <!--<img src="img/rose_hammer.svg"/>
+                    <small>Not everything is a nail.</small>-->
+                </span>
             </div>
         </section>
 
@@ -467,7 +473,7 @@ abc.run()
             <h3>a non-identifiable ODE model</h3>
             <img src="img/motivation_nonidable.svg" class="r-stretch"/>
         </section>
-        
+
 
         <section>
             <h2>Selection of temperatures</h2>
@@ -491,7 +497,7 @@ abc.run()
             <h2>Applicable to various model types and noise models</h2>
             <img src="img/application_posteriors.svg" class="r-stretch"/>
         </section>
-        
+
 
         <section>
             <h2>Scales to challenging problems</h2>
@@ -527,6 +533,8 @@ Reveal.initialize({
 });
 Reveal.configure({ slideNumber: 'c/t' });
 Reveal.configure({ showSlideNumber: 'all' });
+
+
 
 
 </script>
